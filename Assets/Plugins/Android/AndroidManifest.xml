@@ -25,4 +25,6 @@
   <uses-permission android:name="com.oculus.permission.IMPORT_EXPORT_IOT_MAP_DATA" android:required="false" />
   <uses-feature android:name="com.oculus.feature.PASSTHROUGH" android:required="true" />
   <uses-permission android:name="com.oculus.permission.USE_SCENE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
