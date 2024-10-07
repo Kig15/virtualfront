@@ -21,13 +21,19 @@ public class Tekitou : NetworkBehaviour
         // }
         // NetworkManager.Singleton.StartClient();
         var unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        unityTransport.SetConnectionData(serverIPAddress, serverPort);
+        // unityTransport.SetConnectionData(serverIPAddress, serverPort);
 
         // クライアントとして接続
         NetworkManager.Singleton.StartClient();
-        string url = "http://google.com";
-        UnityWebRequest webRequest = UnityWebRequest.Get(url);
-        Debug.Log("webRequest: " + webRequest);
+        // NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        // Debug.Log(unityTransport.ConnectionData.Address);
+        NetworkManager.Singleton.OnClientDisconnectCallback += (clientId) =>
+        {
+            Debug.Log("Client disconnected: " + clientId);
+        };
+        // string url = "http://google.com";
+        // UnityWebRequest webRequest = UnityWebRequest.Get(url);
+        // Debug.Log("webRequest: " + webRequest);
     }
 
     // Update is called once per frame

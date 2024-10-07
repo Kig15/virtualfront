@@ -14,9 +14,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Title.unity
     guid: e2fc4ca323c9a494d9d62a09dfb112ac
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/netcode_client.unity
     guid: 9adab48850ab9b347a73668ca59d4090
+  - enabled: 1
+    path: Assets/Scenes/test.unity
+    guid: 26d380075a131264895f9146d2013f33
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 202d4609ccf6db643aed4932732c6dad
