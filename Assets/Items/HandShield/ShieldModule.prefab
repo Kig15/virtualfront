@@ -205,23 +205,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -3.7493994e-33
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -6.123234e-17
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.123234e-17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -238,6 +238,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       propertyPath: m_Name
       value: ShieldModule
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
+      propertyPath: m_TagString
+      value: shieldModule
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -260,7 +268,10 @@ PrefabInstance:
       addedObject: {fileID: 6721272658819919378}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1622939988124398811}
+      addedObject: {fileID: 7816399771275008168}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5185977533383514282}
   m_SourcePrefab: {fileID: 100100000, guid: 026376c9ebab7514c96ba060222c3377, type: 3}
 --- !u!4 &149657676040080781 stripped
 Transform:
@@ -318,7 +329,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.75466686, y: 1.1262914, z: 0.46890184}
+  m_Size: {x: 0.25, y: 0.77, z: 0.46890184}
   m_Center: {x: 0, y: 0, z: 0.1415325}
 --- !u!114 &6721272658819919378
 MonoBehaviour:
@@ -333,13 +344,114 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShieldHelth: 0
-  ShieldHelthMax: 250
+  ShieldHelthMax: 70
+  OVERHEATsec: 25
   ShieldUI: {fileID: 6030376208645767699}
   Shield: {fileID: 4242506896602712179}
+  audioSource: {fileID: 7816399771275008168}
+  EnableSound: {fileID: 8300000, guid: 5efb8df9aa50b894d889adb7aa1b3cdc, type: 3}
+  DisableSound: {fileID: 8300000, guid: d95d0a647bbb0ef4ab591728e6a326a1, type: 3}
+  OverHeatSound: {fileID: 8300000, guid: 43f37dc9ded2a184e8c164c4e23c2d96, type: 3}
   MeshCollider: {fileID: 6160599298079685373}
-  grabbable: {fileID: 1622939988124398811}
+  grabbable: {fileID: 5185977533383514282}
   shotButton: 8192
---- !u!114 &1622939988124398811
+--- !u!82 &7816399771275008168
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673394185171621687}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5185977533383514282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,7 +460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 673394185171621687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4222f68daab1f7942ae468f9b492a938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_allowOffhandGrab: 1
@@ -423,6 +535,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cf172d0a8dd1d6045a4717e1cdeaeca8, type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cf172d0a8dd1d6045a4717e1cdeaeca8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cf172d0a8dd1d6045a4717e1cdeaeca8, type: 3}
       propertyPath: m_TagString

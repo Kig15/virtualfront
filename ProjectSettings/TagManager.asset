@@ -6,6 +6,16 @@ TagManager:
   tags:
   - bullet
   - shield
+  - Items
+  - Obstacles
+  - Gun
+  - RedTeam
+  - BlueTeam
+  - GhostTeam
+  - medical
+  - shieldModule
+  - lefthand
+  - righthand
   layers:
   - Default
   - TransparentFX
