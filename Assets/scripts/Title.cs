@@ -48,7 +48,7 @@ public class Title : NetworkBehaviour
         //ホスト開始
         // NetworkManager.Singleton.StartHost();
         var unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        unityTransport.SetConnectionData("192.168.197.119", 7777);
+        unityTransport.SetConnectionData("192.168.11.4", 7777);
         Debug.Log(NetworkManager.Singleton.StartHost());
         //シーンを切り替え
         NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);

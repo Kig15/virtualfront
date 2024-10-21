@@ -17,12 +17,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/netcode_client.unity
     guid: 9adab48850ab9b347a73668ca59d4090
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test.unity
     guid: 26d380075a131264895f9146d2013f33
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game.unity
     guid: 202d4609ccf6db643aed4932732c6dad
+  - enabled: 1
+    path: Assets/Scenes/websocket_server.unity
+    guid: 4342a131d4e78a9488e160ac8a9d52ec
+  - enabled: 0
+    path: Assets/Scenes/websocket_client.unity
+    guid: 0620d340178aad54994903b14f8783da
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: c3f7922e0413cb143ac64341961a7bbb, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2dc59a919849a6f439121348ee780898, type: 2}

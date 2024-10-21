@@ -9,7 +9,7 @@ public class Tekitou : NetworkBehaviour
 {
     // Start is called before the first frame update
 
-    public string serverIPAddress = "192.168.197.119";  // 接続したいサーバーのIPアドレス
+    public string serverIPAddress = "192.168.11.4";  // 接続したいサーバーのIPアドレス
     public ushort serverPort = 7777;  // 使用するポート番号
     void Start()
     {

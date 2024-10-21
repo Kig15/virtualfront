@@ -142,8 +142,6 @@ PlayerSettings:
   bundleVersion: 0.2
   preloadedAssets:
   - {fileID: 11400000, guid: d3bacd8bbe6d3e84ba789c1dd718dadc, type: 2}
-  - {fileID: 11400000, guid: c3f7922e0413cb143ac64341961a7bbb, type: 2}
-  - {fileID: 6692040841808801149, guid: 2dc59a919849a6f439121348ee780898, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -857,11 +855,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: eae127ab-a3c6-4336-a438-2557bc7eae5b
+  cloudProjectId: 416b238e-51df-4499-8cd2-5ad3044998a0
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: VirtualFrontlineMR
-  organizationId: kig16games
+  projectName: virtualfrontier
+  organizationId: kojoryuto
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
