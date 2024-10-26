@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using TMPro;
 using System.Linq;
+using Unity.VisualScripting;
+using System;
 
 public enum Button_sm
 {
@@ -127,6 +129,7 @@ public class ClientManager : MonoBehaviour
     public GameObject Masterobj;
     public Objdat absomaster;
     private bool iscordok;
+    public int reccount;
     private async Task WaitOneSecond()
     {
         await Task.Delay(1000);
@@ -134,27 +137,53 @@ public class ClientManager : MonoBehaviour
     //サーバへ、メッセージを送信する
     public void Update()
     {
-        if (!iscordok)
+        reccount++;
+        absomaster = new Objdat
         {
-            Debug.LogError(iscordok);
-            if (OVRInput.GetDown(OVRInput.Button.One)) { iscordok = true; }
-            absomaster = new Objdat
+            position = new ThreeData
             {
-                position = new ThreeData
-                {
-                    x = Masterobj.transform.position.x,
-                    y = Masterobj.transform.position.y,
-                    z = 0,
-                },
-                rotation = new FourData
-                {
-                    x = 0,
-                    y = 0,
-                    z = 0,
-                    w = 0
-                }
-            };
+                x = Masterobj.transform.position.x,
+                y = 0,
+                z = Masterobj.transform.position.z,
+            },
+            rotation = new FourData
+            {
+                x = 0,
+                y = 0,
+                z = 0,
+                w = 0
+            }
+        };
+        if (reccount % 20 == 0)
+        {
+            //Debug.LogError(JsonConvert.SerializeObject(glocks.id_list));
+            for (int i = 0; i < glocks.objlist.Count; i++)
+            {
+                glocks.objlist[glocks.id_list.IndexOf((i == 0 ) ? 2:1)].transform.FindChild("Text (TMP)").GetComponent<TextMeshPro>().text = ammo[i];
+            }
         }
+        //if (!iscordok)
+        //{
+        //    Debug.LogError(iscordok);
+        //    if (OVRInput.GetDown(OVRInput.Button.One)) { iscordok = true; }
+        //    absomaster = new Objdat
+        //    {
+        //        position = new ThreeData
+        //        {
+        //            x = Masterobj.transform.position.x,
+        //            y = 0,
+        //            z = Masterobj.transform.position.z,
+        //        },
+        //        rotation = new FourData
+        //        {
+        //            x = 0,
+        //            y = 0,
+        //            z = 0,
+        //            w = 0
+        //        }
+        //    };
+        //}
+        status ??= new Status();
         hp.text = hps;
         status.id = 0;
         status.data = (isInvincible) ? "true" : "false";
@@ -167,7 +196,7 @@ public class ClientManager : MonoBehaviour
         {
             if (i != null)
             {
-                pos.y = i.position.y + absomaster   .position.y;
+                pos.y = i.position.y + absomaster.position.y;
                 pos.x = i.position.x + absomaster.position.x;
                 pos.z = i.position.z + absomaster.position.z;
                 rot.x = i.rotation.x + absomaster.rotation.x;
@@ -199,103 +228,103 @@ public class ClientManager : MonoBehaviour
         // }
         senddata ??= new Senddata();
         objdata.id = 0;
-        objdata.position.x = rightctrl.transform.position.x + absomaster.position.x;
-        objdata.position.y = rightctrl.transform.position.y + absomaster.position.y;
-        objdata.position.z = rightctrl.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = rightctrl.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = rightctrl.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = rightctrl.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = rightctrl.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = rightctrl.transform.position.x - absomaster.position.x;
+        objdata.position.y = rightctrl.transform.position.y - absomaster.position.y;
+        objdata.position.z = rightctrl.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = rightctrl.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = rightctrl.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = rightctrl.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = rightctrl.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "right";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
         objdata.id = 1;
-        objdata.position.x = leftctrl.transform.position.x + absomaster.position.x;
-        objdata.position.y = leftctrl.transform.position.y + absomaster.position.y;
-        objdata.position.z = leftctrl.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = leftctrl.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = leftctrl.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = leftctrl.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = leftctrl.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = leftctrl.transform.position.x - absomaster.position.x;
+        objdata.position.y = leftctrl.transform.position.y - absomaster.position.y;
+        objdata.position.z = leftctrl.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = leftctrl.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = leftctrl.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = leftctrl.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = leftctrl.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "left";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
 
         objdata.id = 2;
-        objdata.position.x = HeadHitBox.transform.position.x + absomaster.position.x;
-        objdata.position.y = HeadHitBox.transform.position.y + absomaster.position.y;
-        objdata.position.z = HeadHitBox.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = HeadHitBox.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = HeadHitBox.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = HeadHitBox.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = HeadHitBox.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = HeadHitBox.transform.position.x - absomaster.position.x;
+        objdata.position.y = HeadHitBox.transform.position.y - absomaster.position.y;
+        objdata.position.z = HeadHitBox.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = HeadHitBox.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = HeadHitBox.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = HeadHitBox.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = HeadHitBox.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "HeadHitBox";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
 
         objdata.id = 3;
-        objdata.position.x = BodyHitBox.transform.position.x + absomaster.position.x;
-        objdata.position.y = BodyHitBox.transform.position.y + absomaster.position.y;
-        objdata.position.z = BodyHitBox.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = BodyHitBox.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = BodyHitBox.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = BodyHitBox.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = BodyHitBox.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = BodyHitBox.transform.position.x - absomaster.position.x;
+        objdata.position.y = BodyHitBox.transform.position.y - absomaster.position.y;
+        objdata.position.z = BodyHitBox.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = BodyHitBox.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = BodyHitBox.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = BodyHitBox.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = BodyHitBox.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "BodyHitBox";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
 
         objdata.id = 4;
-        objdata.position.x = UpperArmRHitBox.transform.position.x + absomaster.position.x;
-        objdata.position.y = UpperArmRHitBox.transform.position.y + absomaster.position.y;
-        objdata.position.z = UpperArmRHitBox.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = UpperArmRHitBox.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = UpperArmRHitBox.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = UpperArmRHitBox.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = UpperArmRHitBox.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = UpperArmRHitBox.transform.position.x - absomaster.position.x;
+        objdata.position.y = UpperArmRHitBox.transform.position.y - absomaster.position.y;
+        objdata.position.z = UpperArmRHitBox.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = UpperArmRHitBox.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = UpperArmRHitBox.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = UpperArmRHitBox.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = UpperArmRHitBox.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "UpperArmRHitBox";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
 
         objdata.id = 5;
-        objdata.position.x = UpperArmLHitBox.transform.position.x + absomaster.position.x;
-        objdata.position.y = UpperArmLHitBox.transform.position.y + absomaster.position.y;
-        objdata.position.z = UpperArmLHitBox.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = UpperArmLHitBox.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = UpperArmLHitBox.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = UpperArmLHitBox.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = UpperArmLHitBox.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = UpperArmLHitBox.transform.position.x - absomaster.position.x;
+        objdata.position.y = UpperArmLHitBox.transform.position.y - absomaster.position.y;
+        objdata.position.z = UpperArmLHitBox.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = UpperArmLHitBox.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = UpperArmLHitBox.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = UpperArmLHitBox.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = UpperArmLHitBox.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "UpperArmLHitBox";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
 
         objdata.id = 6;
-        objdata.position.x = LowerArmRHitBox.transform.position.x + absomaster.position.x;
-        objdata.position.y = LowerArmRHitBox.transform.position.y + absomaster.position.y;
-        objdata.position.z = LowerArmRHitBox.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = LowerArmRHitBox.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = LowerArmRHitBox.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = LowerArmRHitBox.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = LowerArmRHitBox.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = LowerArmRHitBox.transform.position.x - absomaster.position.x;
+        objdata.position.y = LowerArmRHitBox.transform.position.y - absomaster.position.y;
+        objdata.position.z = LowerArmRHitBox.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = LowerArmRHitBox.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = LowerArmRHitBox.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = LowerArmRHitBox.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = LowerArmRHitBox.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "LowerArmRHitBox";
         senddata.data = JsonConvert.SerializeObject(objdata);
         Senddat();
 
         objdata.id = 7;
-        objdata.position.x = LowerArmLHitBox.transform.position.x + absomaster.position.x;
-        objdata.position.y = LowerArmLHitBox.transform.position.y + absomaster.position.y;
-        objdata.position.z = LowerArmLHitBox.transform.position.z + absomaster.position.z;
-        objdata.rotation.x = LowerArmLHitBox.transform.rotation.x + absomaster.rotation.x;
-        objdata.rotation.y = LowerArmLHitBox.transform.rotation.y + absomaster.rotation.y;
-        objdata.rotation.z = LowerArmLHitBox.transform.rotation.z + absomaster.rotation.z;
-        objdata.rotation.w = LowerArmLHitBox.transform.rotation.w + absomaster.rotation.w;
+        objdata.position.x = LowerArmLHitBox.transform.position.x - absomaster.position.x;
+        objdata.position.y = LowerArmLHitBox.transform.position.y - absomaster.position.y;
+        objdata.position.z = LowerArmLHitBox.transform.position.z - absomaster.position.z;
+        objdata.rotation.x = LowerArmLHitBox.transform.rotation.x - absomaster.rotation.x;
+        objdata.rotation.y = LowerArmLHitBox.transform.rotation.y - absomaster.rotation.y;
+        objdata.rotation.z = LowerArmLHitBox.transform.rotation.z - absomaster.rotation.z;
+        objdata.rotation.w = LowerArmLHitBox.transform.rotation.w - absomaster.rotation.w;
         objdata.id_list = new int[1];
         senddata.type = "LowerArmLHitBox";
         senddata.data = JsonConvert.SerializeObject(objdata);
@@ -330,8 +359,14 @@ public class ClientManager : MonoBehaviour
             foreach (var list in recglock.id_list)
             {
                 duped = -1;
-                Debug.LogError(JsonConvert.SerializeObject(glocks.id_list));
-                foreach (var list2 in glocks.id_list)
+                //Debug.LogError(JsonConvert.SerializeObject(glocks.id_list));
+
+                Objmgr<GameObject> glocktmp = new Objmgr<GameObject>
+                {
+                    objlist = new List<GameObject>(glocks.objlist),
+                    id_list = new List<int>(glocks.id_list)
+                };
+                foreach (var list2 in glocktmp.id_list)
                 {
                     if ((list) == (list2))
                     {
@@ -369,7 +404,7 @@ public class ClientManager : MonoBehaviour
                 {
                     if (((list) == (recglock.id)) && (glocks.objlist.Count < recglock.id_list.Length))
                     {
-                        Debug.LogError(recglock.id + ";" + list + ";" + JsonConvert.SerializeObject(glocks.id_list));
+                        //Debug.LogError(recglock.id + ";" + list + ";" + JsonConvert.SerializeObject(glocks.id_list));
                         glocks.Add(Instantiate(glock, pos, rot), list);
                         if (!once)
                         {
@@ -385,15 +420,35 @@ public class ClientManager : MonoBehaviour
                     }
                 }
             }
+            //foreach (var list in glocks.id_list)
+            //{
+            //    duped = -1;
+            //    Debug.LogError(JsonConvert.SerializeObject(glocks.id_list));
+            //    foreach (var list2 in recglock.id_list)
+            //    {
+            //        if ((list) == (list2))
+            //        {
+            //            duped = list2;
+            //        }
+            //    }
+            //    if (duped == -1)
+            //    {
+            //        glocks.Remove(glocks.objlist[glocks.id_list.IndexOf(list)]);
+            //    }
+            //}
         }
         if (recsield != null)
         {
-            //sields.objlist[sields.id_list.IndexOf(recsield.id)].GetComponent<HandShieldController>().Shield.SetActive(recsield.isactive);
             foreach (var list in recsield.id_list)
             {
                 duped = -1;
-                Debug.LogError(JsonConvert.SerializeObject(sields.id_list));
-                foreach (var list2 in sields.id_list)
+                //Debug.LogError(JsonConvert.SerializeObject(sields.id_list));
+                Objmgr<GameObject> sieldtmp2 = new Objmgr<GameObject>
+                {
+                    objlist = new List<GameObject>(sields.objlist),
+                    id_list = new List<int>(sields.id_list)
+                };
+                foreach (var list2 in sieldtmp2.id_list)
                 {
                     if ((list) == (list2))
                     {
@@ -431,7 +486,7 @@ public class ClientManager : MonoBehaviour
                 {
                     if (((list) == (recsield.id)) && (sields.objlist.Count < recsield.id_list.Length))
                     {
-                        Debug.LogError(recsield.id + ";" + list + ";" + JsonConvert.SerializeObject(sields.id_list));
+                        //Debug.LogError(recsield.id + ";" + list + ";" + JsonConvert.SerializeObject(sields.id_list));
                         sields.Add(Instantiate(sield, pos, rot), list);
                         if (!once)
                         {
@@ -447,141 +502,387 @@ public class ClientManager : MonoBehaviour
                     }
                 }
             }
-        }
-        if (recbullet != null)
-        {
-            pos.y = recbullet.position.y + absomaster.position.y;
-            pos.x = recbullet.position.x + absomaster.position.x;
-            pos.z = recbullet.position.z + absomaster.position.z;
-            rot.x = recbullet.rotation.x + absomaster.rotation.x;
-            rot.y = recbullet.rotation.y + absomaster.rotation.y;
-            rot.z = recbullet.rotation.z + absomaster.rotation.z;
-            rot.w = recbullet.rotation.w + absomaster.rotation.w;
-            if (recbullet.id != -1)
+            Objmgr<GameObject> sieldtmp = new Objmgr<GameObject> { 
+                objlist = new List<GameObject>(sields.objlist),
+                id_list = new List<int>(sields.id_list)
+            };
+            foreach (var list in sieldtmp.id_list)
             {
-                //Debug.Log(JsonConvert.SerializeObject(bullets.id_list.ToArray()));
-                //Debug.Log("aa: " + recbullet.id + ";" + JsonConvert.SerializeObject(recbullet.id_list) + ";" + JsonConvert.SerializeObject(bullets.id_list));
-                foreach (var list in recbullet.id_list)
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(recsield.id_list));
+                foreach (var list2 in recsield.id_list)
                 {
-                    duped = -1;
-                    foreach (var list2 in bullets.id_list)
+                    if ((list) == (list2))
                     {
-                        if (list == list2)
+                        duped = list2;
+                    }
+                }
+                if (duped == -1)
+                {
+                    GameObject remove = sields.objlist[sields.id_list.IndexOf(list)];
+                    sields.Remove(remove);
+                    Destroy(remove);
+                    Debug.LogError(remove.name);
+                }
+            }
+            //sields.objlist[sields.id_list.IndexOf(recsield.id)].transform.FindChild("Shield").gameObject.SetActive(recsield.isactive);
+        }
+        if (false)
+        {
+            if (recbullet != null)
+            {
+                if (recbullet.id != -1)
+                {
+                    foreach (var list in recbullet.id_list)
+                    {
+                        duped = -1;
+                        //Debug.LogError(JsonConvert.SerializeObject(bullets.id_list));
+                        foreach (var list2 in bullets.id_list)
                         {
-                            duped = list2;
-                            if (list == (recbullet.id - 1))
+                            if ((list) == (list2))
                             {
-                                bullets.objlist[recbullet.id - 1].transform.SetPositionAndRotation(pos, rot);
+                                duped = list2;
+                                if ((list) == (recbullet.id))
+                                {
+                                    if (bullets.objlist.Count < recbullet.id_list.Length)
+                                    {
+                                        pos.y = recbullet.position.y + absomaster.position.y;
+                                        pos.x = recbullet.position.x + absomaster.position.x;
+                                        pos.z = recbullet.position.z + absomaster.position.z;
+                                        rot.x = recbullet.rotation.x + absomaster.rotation.x;
+                                        rot.y = recbullet.rotation.y + absomaster.rotation.y;
+                                        rot.z = recbullet.rotation.z + absomaster.rotation.z;
+                                        rot.w = recbullet.rotation.w + absomaster.rotation.w;
+                                        bullets.id_list.Remove(recbullet.id - 1);
+                                        bullets.Add(Instantiate(bullet, pos, rot));
+                                    }
+                                    else
+                                    {
+                                        pos.y = recbullet.position.y + absomaster.position.y;
+                                        pos.x = recbullet.position.x + absomaster.position.x;
+                                        pos.z = recbullet.position.z + absomaster.position.z;
+                                        rot.x = recbullet.rotation.x + absomaster.rotation.x;
+                                        rot.y = recbullet.rotation.y + absomaster.rotation.y;
+                                        rot.z = recbullet.rotation.z + absomaster.rotation.z;
+                                        rot.w = recbullet.rotation.w + absomaster.rotation.w;
+                                        bullets.objlist[bullets.id_list.IndexOf(list)].transform.SetPositionAndRotation(pos, rot);
+                                    }
+
+                                }
+                            }
+                        }
+                        if (duped == -1)
+                        {
+                            if (((list) == (recbullet.id)) && (bullets.objlist.Count < recbullet.id_list.Length))
+                            {
+                                //Debug.LogError(recbullet.id + ";" + list + ";" + JsonConvert.SerializeObject(bullets.id_list));
+                                if (bullets == null)
+                                {
+                                    Debug.LogError("null");
+                                }
+                                bullets.Add(Instantiate(bullet, pos, rot), list);
+                                if (!once)
+                                {
+                                    pos.y = recbullet.position.y + absomaster.position.y;
+                                    pos.x = recbullet.position.x + absomaster.position.x;
+                                    pos.z = recbullet.position.z + absomaster.position.z;
+                                    rot.x = recbullet.rotation.x + absomaster.rotation.x;
+                                    rot.y = recbullet.rotation.y + absomaster.rotation.y;
+                                    rot.z = recbullet.rotation.z + absomaster.rotation.z;
+                                    rot.w = recbullet.rotation.w + absomaster.rotation.w;
+                                    bullets.id_list.Remove(0);
+                                }
                             }
                         }
                     }
-                    if (duped == -1)
-                    {
-                        if (list == (recbullet.id - 1))
-                        {
-                            bullets.Add(Instantiate(bullet, pos, rot));
-                        }
-                    }
                 }
-                foreach (var list in bullets.id_list)
+                else
                 {
-                    duped = -1;
-                    foreach (var list2 in recbullet.id_list)
+                    //Debug.Log(JsonConvert.SerializeObject(bullets.id_list.ToArray()));
+                    for (int i = 0; i < bullets.objlist.Count; i++)
                     {
-                        if (list == list2)
-                        {
-                            duped = list2;
-                        }
+                        bullets.Remove(bullets.objlist[i]);
                     }
-                    if (duped == -1)
+                    foreach (var list in bullets.objlist)
                     {
-                        //Destroy(bullets.objlist[bullets.id_list.IndexOf(list)]);
+                        Destroy(list);
                     }
-                }
-            }
-            else
-            {
-                //Debug.Log(JsonConvert.SerializeObject(bullets.id_list.ToArray()));
-                for (int i = 0; i < bullets.objlist.Count; i++)
-                {
-                    bullets.Remove(bullets.objlist[i]);
-                }
-                foreach (var list in bullets.objlist)
-                {
-                    Destroy(list);
                 }
             }
         }
         if (recobstacles != null)
         {
-            pos.y = recobstacles.position.y + absomaster.position.y;
-            pos.x = recobstacles.position.x + absomaster.position.x;
-            pos.z = recobstacles.position.z + absomaster.position.z;
-            rot.x = recobstacles.rotation.x + absomaster.rotation.x;
-            rot.y = recobstacles.rotation.y + absomaster.rotation.y;
-            rot.z = recobstacles.rotation.z + absomaster.rotation.z;
-            rot.w = recobstacles.rotation.w + absomaster.rotation.w;
-            if (obstacless.globalcount < recobstacles.id_list.Length)
+            foreach (var list in recobstacles.id_list)
             {
-                obstacless.Add(Instantiate(obstacles, pos, rot));
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(obstacless.id_list));
+                Objmgr<GameObject> obstmp1 = new Objmgr<GameObject>
+                {
+                    objlist = new List<GameObject>(obstacless.objlist),
+                    id_list = new List<int>(obstacless.id_list)
+                };
+                foreach (var list2 in obstmp1.id_list)
+                {
+                    if ((list) == (list2))
+                    {
+                        duped = list2;
+                        if ((list) == (recobstacles.id))
+                        {
+                            if (obstmp1.objlist.Count < recobstacles.id_list.Length)
+                            {
+                                pos.y = recobstacles.position.y + absomaster.position.y;
+                                pos.x = recobstacles.position.x + absomaster.position.x;
+                                pos.z = recobstacles.position.z + absomaster.position.z;
+                                rot.x = recobstacles.rotation.x + absomaster.rotation.x;
+                                rot.y = recobstacles.rotation.y + absomaster.rotation.y;
+                                rot.z = recobstacles.rotation.z + absomaster.rotation.z;
+                                rot.w = recobstacles.rotation.w + absomaster.rotation.w;
+                                obstmp1.id_list.Remove(recobstacles.id - 1);
+                                obstacless.Add(Instantiate(obstacles, pos, rot));
+                            }
+                            else
+                            {
+                                pos.y = recobstacles.position.y + absomaster.position.y;
+                                pos.x = recobstacles.position.x + absomaster.position.x;
+                                pos.z = recobstacles.position.z + absomaster.position.z;
+                                rot.x = recobstacles.rotation.x + absomaster.rotation.x;
+                                rot.y = recobstacles.rotation.y + absomaster.rotation.y;
+                                rot.z = recobstacles.rotation.z + absomaster.rotation.z;
+                                rot.w = recobstacles.rotation.w + absomaster.rotation.w;
+                                obstacless.objlist[obstmp1.id_list.IndexOf(list)].transform.SetPositionAndRotation(pos, rot);
+                            }
+
+                        }
+                    }
+                }
+                if (duped == -1)
+                {
+                    if (((list) == (recobstacles.id)) && (obstacless.objlist.Count < recobstacles.id_list.Length))
+                    {
+                        //Debug.LogError(recobstacles.id + ";" + list + ";" + JsonConvert.SerializeObject(obstacless.id_list));
+                        obstacless.Add(Instantiate(obstacles, pos, rot), list);
+                        if (!once)
+                        {
+                            pos.y = recobstacles.position.y + absomaster.position.y;
+                            pos.x = recobstacles.position.x + absomaster.position.x;
+                            pos.z = recobstacles.position.z + absomaster.position.z;
+                            rot.x = recobstacles.rotation.x + absomaster.rotation.x;
+                            rot.y = recobstacles.rotation.y + absomaster.rotation.y;
+                            rot.z = recobstacles.rotation.z + absomaster.rotation.z;
+                            rot.w = recobstacles.rotation.w + absomaster.rotation.w;
+                            obstacless.id_list.Remove(0);
+                        }
+                    }
+                }
             }
-            else if (obstacless.objlist.Count > recobstacles.id_list.Length)
+            Objmgr<GameObject> obstmp = new Objmgr<GameObject> { 
+                objlist = new List<GameObject>(obstacless.objlist),
+                id_list = new List<int>(obstacless.id_list)
+            };
+            foreach (var list in obstmp.id_list)
             {
-                Destroy(obstacless.objlist[recobstacles.id - 1]);
-            }
-            else
-            {
-                obstacless.objlist[recobstacles.id - 1].transform.SetPositionAndRotation(pos, rot);
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(obstacless.id_list));
+                foreach (var list2 in recobstacles.id_list)
+                {
+                    if ((list) == (list2))
+                    {
+                        duped = list2;
+                    }
+                }
+                if (duped == -1)
+                {
+                    int index = obstacless.id_list.IndexOf(list);
+                    Destroy(obstacless.objlist[index]);
+                    obstacless.Remove(obstacless.objlist[index]);
+                }
             }
         }
         if (recobstacles2 != null)
         {
-            pos.y = recobstacles2.position.y + absomaster.position.y;
-            pos.x = recobstacles2.position.x + absomaster.position.x;
-            pos.z = recobstacles2.position.z + absomaster.position.z;
-            rot.x = recobstacles2.rotation.x + absomaster.rotation.x;
-            rot.y = recobstacles2.rotation.y + absomaster.rotation.y;
-            rot.z = recobstacles2.rotation.z + absomaster.rotation.z;
-            rot.w = recobstacles2.rotation.w + absomaster.rotation.w;
-            if (obstacless2.globalcount < recobstacles2.id_list.Length)
+            foreach (var list in obstacless2.id_list)
             {
-                obstacless2.Add(Instantiate(obstacles2, pos, rot));
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(obstacless2.id_list));
+                if(obstacless2 == null)
+                {
+                    Debug.LogError("null");
+                }
+                //Debug.LogError(JsonConvert.SerializeObject(obstacless.id_list));
+                Objmgr<GameObject> obstmp1 = new Objmgr<GameObject>
+                {
+                    objlist = new List<GameObject>(obstacless2.objlist),
+                    id_list = new List<int>(obstacless2.id_list)
+                };
+                foreach (var list2 in obstmp1.id_list)
+                {
+                    if ((list) == (list2))
+                    {
+                        duped = list2;
+                        if ((list) == (recobstacles2.id))
+                        {
+                            if (obstacless2.objlist.Count < recobstacles2.id_list.Length)
+                            {
+                                pos.y = recobstacles2.position.y + absomaster.position.y;
+                                pos.x = recobstacles2.position.x + absomaster.position.x;
+                                pos.z = recobstacles2.position.z + absomaster.position.z;
+                                rot.x = recobstacles2.rotation.x + absomaster.rotation.x;
+                                rot.y = recobstacles2.rotation.y + absomaster.rotation.y;
+                                rot.z = recobstacles2.rotation.z + absomaster.rotation.z;
+                                rot.w = recobstacles2.rotation.w + absomaster.rotation.w;
+                                obstacless2.id_list.Remove(recobstacles2.id - 1);
+                                obstacless2.Add(Instantiate(glock, pos, rot));
+                            }
+                            else
+                            {
+                                pos.y = recobstacles2.position.y + absomaster.position.y;
+                                pos.x = recobstacles2.position.x + absomaster.position.x;
+                                pos.z = recobstacles2.position.z + absomaster.position.z;
+                                rot.x = recobstacles2.rotation.x + absomaster.rotation.x;
+                                rot.y = recobstacles2.rotation.y + absomaster.rotation.y;
+                                rot.z = recobstacles2.rotation.z + absomaster.rotation.z;
+                                rot.w = recobstacles2.rotation.w + absomaster.rotation.w;
+                                obstacless2.objlist[obstacless2.id_list.IndexOf(list)].transform.SetPositionAndRotation(pos, rot);
+                            }
+
+                        }
+                    }
+                }
+                if (duped == -1)
+                {
+                    if (((list) == (recobstacles2.id)) && (obstacless2.objlist.Count < recobstacles2.id_list.Length))
+                    {
+                        //Debug.LogError(recobstacles2.id + ";" + list + ";" + JsonConvert.SerializeObject(obstacless2.id_list));
+                        obstacless2.Add(Instantiate(glock, pos, rot), list);
+                        if (!once)
+                        {
+                            pos.y = recobstacles2.position.y + absomaster.position.y;
+                            pos.x = recobstacles2.position.x + absomaster.position.x;
+                            pos.z = recobstacles2.position.z + absomaster.position.z;
+                            rot.x = recobstacles2.rotation.x + absomaster.rotation.x;
+                            rot.y = recobstacles2.rotation.y + absomaster.rotation.y;
+                            rot.z = recobstacles2.rotation.z + absomaster.rotation.z;
+                            rot.w = recobstacles2.rotation.w + absomaster.rotation.w;
+                            obstacless2.id_list.Remove(0);
+                        }
+                    }
+                }
             }
-            else if (obstacless2.objlist.Count > recobstacles2.id_list.Length)
+            Objmgr<GameObject> obstmp = new Objmgr<GameObject> { 
+                objlist = new List<GameObject>(obstacless2.objlist),
+                id_list = new List<int>(obstacless2.id_list)
+            };
+            foreach (var list in obstmp.id_list)
             {
-                Destroy(obstacless2.objlist[recobstacles2.id - 1]);
-            }
-            else
-            {
-                obstacless2.objlist[recobstacles2.id - 1].transform.SetPositionAndRotation(pos, rot);
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(obstacless2.id_list));
+                foreach (var list2 in recobstacles2.id_list)
+                {
+                    if ((list) == (list2))
+                    {
+                        duped = list2;
+                    }
+                }
+                if (duped == -1)
+                {
+                    int index = obstacless2.id_list.IndexOf(list);
+                    Debug.LogError(index +":"+JsonConvert.SerializeObject(obstacless2.id_list));
+                    if (index != -1)
+                    {
+                        Destroy(obstacless2.objlist[index]);
+                        obstacless2.Remove(obstacless2.objlist[index]);
+
+                    }
+                }
             }
         }
         if (recsyringe != null)
         {
-            pos.y = recsyringe.position.y + absomaster.position.y;
-            pos.x = recsyringe.position.x + absomaster.position.x;
-            pos.z = recsyringe.position.z + absomaster.position.z;
-            rot.x = recsyringe.rotation.x + absomaster.rotation.x;
-            rot.y = recsyringe.rotation.y + absomaster.rotation.y;
-            rot.z = recsyringe.rotation.z + absomaster.rotation.z;
-            rot.w = recsyringe.rotation.w + absomaster.rotation.w;
-            if (syringes.globalcount < recsyringe.id_list.Length)
+            foreach (var list in recsyringe.id_list)
             {
-                syringes.Add(Instantiate(syringe, pos, rot));
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(syringes.id_list));
+                foreach (var list2 in syringes.id_list)
+                {
+                    if ((list) == (list2))
+                    {
+                        duped = list2;
+                        if ((list) == (recsyringe.id))
+                        {
+                            if (syringes.objlist.Count < recsyringe.id_list.Length)
+                            {
+                                pos.y = recsyringe.position.y + absomaster.position.y;
+                                pos.x = recsyringe.position.x + absomaster.position.x;
+                                pos.z = recsyringe.position.z + absomaster.position.z;
+                                rot.x = recsyringe.rotation.x + absomaster.rotation.x;
+                                rot.y = recsyringe.rotation.y + absomaster.rotation.y;
+                                rot.z = recsyringe.rotation.z + absomaster.rotation.z;
+                                rot.w = recsyringe.rotation.w + absomaster.rotation.w;
+                                syringes.id_list.Remove(recsyringe.id - 1);
+                                syringes.Add(Instantiate(syringe, pos, rot));
+                            }
+                            else
+                            {
+                                pos.y = recsyringe.position.y + absomaster.position.y;
+                                pos.x = recsyringe.position.x + absomaster.position.x;
+                                pos.z = recsyringe.position.z + absomaster.position.z;
+                                rot.x = recsyringe.rotation.x + absomaster.rotation.x;
+                                rot.y = recsyringe.rotation.y + absomaster.rotation.y;
+                                rot.z = recsyringe.rotation.z + absomaster.rotation.z;
+                                rot.w = recsyringe.rotation.w + absomaster.rotation.w;
+                                syringes.objlist[syringes.id_list.IndexOf(list)].transform.SetPositionAndRotation(pos, rot);
+                            }
+
+                        }
+                    }
+                }
+                if (duped == -1)
+                {
+                    if (((list) == (recsyringe.id)) && (syringes.objlist.Count < recsyringe.id_list.Length))
+                    {
+                        //Debug.LogError(recsyringe.id + ";" + list + ";" + JsonConvert.SerializeObject(syringes.id_list));
+                        syringes.Add(Instantiate(syringe, pos, rot), list);
+                        if (!once)
+                        {
+                            pos.y = recsyringe.position.y + absomaster.position.y;
+                            pos.x = recsyringe.position.x + absomaster.position.x;
+                            pos.z = recsyringe.position.z + absomaster.position.z;
+                            rot.x = recsyringe.rotation.x + absomaster.rotation.x;
+                            rot.y = recsyringe.rotation.y + absomaster.rotation.y;
+                            rot.z = recsyringe.rotation.z + absomaster.rotation.z;
+                            rot.w = recsyringe.rotation.w + absomaster.rotation.w;
+                            syringes.id_list.Remove(0);
+                        }
+                    }
+                }
             }
-            else if (syringes.objlist.Count > recsyringe.id_list.Length)
+            Objmgr<GameObject> syringetmp = new Objmgr<GameObject> { 
+                objlist = new List<GameObject>(syringes.objlist),
+                id_list = new List<int>(syringes.id_list)
+            };
+            foreach (var list in syringetmp.id_list)
             {
-                Destroy(syringes.objlist[recsyringe.id - 1]);
-            }
-            else
-            {
-                syringes.objlist[recsyringe.id - 1].transform.SetPositionAndRotation(pos, rot);
+                duped = -1;
+                //Debug.LogError(JsonConvert.SerializeObject(syringes.id_list));
+                foreach (var list2 in recsyringe.id_list)
+                {
+                    if ((list) == (list2))
+                    {
+                        duped = list2;
+                    }
+                }
+                if (duped == -1)
+                {
+                    int index = syringes.id_list.IndexOf(list);
+                    Destroy(syringes.objlist[index]);
+                    syringes.Remove(syringes.objlist[index]);
+                }
             }
         }
     }
     public void RecvText(string text)
     {
-        //Debug.Log(text);
+        Debug.Log(text);
         var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
         string type = jsonObject["type"].ToString();
         // int seq = int.Parse(jsonObject["seq"].ToString());
@@ -719,16 +1020,6 @@ public class ClientManager : MonoBehaviour
         rot = new Quaternion();
         ammo = new string[8];
         sieldhp = new int[8];
-        glocktexts = new TextMeshPro[8]{
-            new TextMeshPro(),
-            new TextMeshPro(),
-            new TextMeshPro(),
-            new TextMeshPro(),
-            new TextMeshPro(),
-            new TextMeshPro(),
-            new TextMeshPro(),
-            new TextMeshPro()
-        };
     }
     public void Senddat()
     {

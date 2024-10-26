@@ -865,7 +865,7 @@ public class ServerManager : MonoBehaviour
                 objdata.rotation.w = datalist[ic].transform.rotation.w;
             if ((ic == 2) || (ic == 3))
             {
-                Debug.LogError(JsonConvert.SerializeObject(objdata));
+                //Debug.LogError(JsonConvert.SerializeObject(objdata));
             }
 
             // ExWebSocketBehavior.ExSend(JsonConvert.SerializeObject(objdata), ExWebSocketBehavior.clientList);
@@ -943,7 +943,7 @@ public class ServerManager : MonoBehaviour
                     };
                     senddata.type = "d_bullet";
                     senddata.data = JsonConvert.SerializeObject(objdata);
-                    ExWebSocketBehavior.ExSend(JsonConvert.SerializeObject(senddata), ExWebSocketBehavior.clientList);
+                    //ExWebSocketBehavior.ExSend(JsonConvert.SerializeObject(senddata), ExWebSocketBehavior.clientList);
                 }
             }
             else
@@ -974,7 +974,7 @@ public class ServerManager : MonoBehaviour
                     if((lastd_bullet[ic] != senddata.data) || isnew)
                     {
                         lastd_bullet[ic] = senddata.data;
-                        ExWebSocketBehavior.ExSend(JsonConvert.SerializeObject(senddata), ExWebSocketBehavior.clientList);
+                        //ExWebSocketBehavior.ExSend(JsonConvert.SerializeObject(senddata), ExWebSocketBehavior.clientList);
                     }
                     //ExWebSocketBehavior.ExSend(JsonConvert.SerializeObject(senddata), ExWebSocketBehavior.clientList);
                 }
@@ -999,8 +999,9 @@ public class ServerManager : MonoBehaviour
                     objdata2.rotation.y = sields.objlist[ic].transform.rotation.y;
                     objdata2.rotation.z = sields.objlist[ic].transform.rotation.z;
                     objdata2.rotation.w = sields.objlist[ic].transform.rotation.w;
-                    //Debug.LogError(sields.objlist[ic].GetComponent<HandShieldController>().isactive);
-                    objdata2.isactive =false;
+                    //Debug.LogError(sields.objlist[ic].transform.FindChild("Shield").gameObject.);
+                    //objdata2.isactive = sields.objlist[ic].transform.FindChild("Shield").gameObject.GetComponent<HandShieldController>().isactive;
+                    //objdata2.isactive = sields.objlist[ic].GetComponentInChildren<HandShieldController>().isactive;
                     senddata ??= new Senddata
                     {
                         type = "data",

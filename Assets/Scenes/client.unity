@@ -1910,8 +1910,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1703129571}
   - component: {fileID: 1703129570}
-  - component: {fileID: 1703129569}
   - component: {fileID: 1703129572}
+  - component: {fileID: 2030395274}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -6092,8 +6092,8 @@ GameObject:
   m_Component:
   - component: {fileID: 997126676}
   - component: {fileID: 997126679}
-  - component: {fileID: 997126678}
   - component: {fileID: 997126677}
+  - component: {fileID: 997126680}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Untagged
@@ -6137,31 +6137,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &997126678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997126675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c118c394aa85845ab65de891a3d0ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabBegin: 0.55
-  grabEnd: 0.35
-  num: 0
-  m_parentHeldObject: 0
-  m_moveHandPosition: 0
-  m_gripTransform: {fileID: 997126676}
-  m_grabVolumes:
-  - {fileID: 997126677}
-  m_controller: 1
-  m_GripAxis1D: 4
-  m_parentTransform: {fileID: 0}
-  m_player: {fileID: 626605050}
-  m_prevFlex: 0
 --- !u!54 &997126679
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6189,6 +6164,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &997126680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997126675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd425c2d06f39bf4899d07c05d0f10eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabBegin: 0.55
+  grabEnd: 0.35
+  m_parentHeldObject: 0
+  m_moveHandPosition: 0
+  m_gripTransform: {fileID: 997126676}
+  m_grabVolumes:
+  - {fileID: 997126677}
+  m_controller: 1
+  m_GripAxis1D: 4
+  m_parentTransform: {fileID: 0}
+  m_player: {fileID: 626605050}
 --- !u!1 &1009181417
 GameObject:
   m_ObjectHideFlags: 0
@@ -7912,8 +7910,8 @@ MonoBehaviour:
   glock: {fileID: 5830563061232118609, guid: 9ab2abccceda19549965b53fc12e9ebb, type: 3}
   sield: {fileID: 673394185171621687, guid: 542177484dfe6b7419be103c24338465, type: 3}
   bullet: {fileID: 6462348453398014027, guid: 0a74d51aef2272949b6c2ec638ef9511, type: 3}
-  obstacles: {fileID: 6841799027659757696, guid: c68e76f41edf2ff439063eb92ff8f559, type: 3}
-  obstacles2: {fileID: 6477323953380050853, guid: 165baf36e5cf61e46bfeb6281fa51baa, type: 3}
+  obstacles: {fileID: 6841799027659757696, guid: 7a6ac18757e68734299ba6985a453bb9, type: 3}
+  obstacles2: {fileID: 6477323953380050853, guid: a3710f6837b0e8e47a14d0974df4c268, type: 3}
   syringe: {fileID: 688760911118478578, guid: 51fefd841f0fc3c4e9bba7e0c2a9c790, type: 3}
   pos: {x: 0, y: 0, z: 0}
   rot: {x: 0, y: 0, z: 0, w: 0}
@@ -7926,6 +7924,7 @@ MonoBehaviour:
   PlayerHealth: 0
   isInvincible: 0
   Masterobj: {fileID: 1703129566}
+  reccount: 0
 --- !u!4 &1320093470
 Transform:
   m_ObjectHideFlags: 0
@@ -10130,8 +10129,8 @@ GameObject:
   - component: {fileID: 1703129575}
   - component: {fileID: 1703129574}
   - component: {fileID: 1703129573}
-  - component: {fileID: 1703129568}
   - component: {fileID: 1703129567}
+  - component: {fileID: 1703129577}
   m_Layer: 0
   m_Name: MasterObject
   m_TagString: Untagged
@@ -10166,48 +10165,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1703129568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703129566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4222f68daab1f7942ae468f9b492a938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_allowOffhandGrab: 1
-  m_snapPosition: 0
-  m_snapOrientation: 0
-  m_snapOffset: {fileID: 0}
-  m_grabPoints: []
---- !u!114 &1703129569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377875256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c118c394aa85845ab65de891a3d0ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabBegin: 0.55
-  grabEnd: 0.35
-  num: 0
-  m_parentHeldObject: 0
-  m_moveHandPosition: 0
-  m_gripTransform: {fileID: 1703129571}
-  m_grabVolumes:
-  - {fileID: 1703129572}
-  m_controller: 1
-  m_GripAxis1D: 4
-  m_parentTransform: {fileID: 0}
-  m_player: {fileID: 626605050}
-  m_prevFlex: 0
 --- !u!54 &1703129570
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10351,12 +10308,29 @@ Transform:
   m_GameObject: {fileID: 1703129566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.466, y: 0.888, z: 0.395}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1703129577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703129566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1704420497
 GameObject:
   m_ObjectHideFlags: 0
@@ -11861,6 +11835,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1077283409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2030395274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377875256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd425c2d06f39bf4899d07c05d0f10eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabBegin: 0.55
+  grabEnd: 0.35
+  m_parentHeldObject: 0
+  m_moveHandPosition: 0
+  m_gripTransform: {fileID: 1703129571}
+  m_grabVolumes:
+  - {fileID: 1703129572}
+  m_controller: 2
+  m_GripAxis1D: 4
+  m_parentTransform: {fileID: 0}
+  m_player: {fileID: 626605050}
 --- !u!1 &2031444694
 GameObject:
   m_ObjectHideFlags: 0

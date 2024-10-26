@@ -1,3 +1,4 @@
+using Meta.WitAi.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,9 +46,10 @@ public class MakeMap : MonoBehaviour
         }
 
         // Obstaclesタグが付いたすべてのオブジェクトを取得
-        obstacles = ServerManager.obstacless2.objlist.ToArray();
+        GameObject[] obstacles2 = ServerManager.obstacless2.objlist.ToArray();
+        Debug.LogError(JsonConvert.SerializeObject(ServerManager.obstacless2.id_list));
         // すべてのオブジェクトを削除
-        foreach (GameObject obstacle in obstacles)
+        foreach (GameObject obstacle in obstacles2)
         {
             ServerManager.obstacless2.Remove(obstacle);
             Destroy(obstacle);
@@ -80,6 +82,17 @@ public class MakeMap : MonoBehaviour
         foreach (GameObject obstacle in obstacles)
         {
             ServerManager.obstacless.Remove(obstacle);
+            Destroy(obstacle);
+        }
+
+
+        // Obstaclesタグが付いたすべてのオブジェクトを取得
+        GameObject[] obstacles2 = ServerManager.obstacless2.objlist.ToArray();
+        Debug.LogError(JsonConvert.SerializeObject(ServerManager.obstacless2.id_list));
+        // すべてのオブジェクトを削除
+        foreach (GameObject obstacle in obstacles2)
+        {
+            ServerManager.obstacless2.Remove(obstacle);
             Destroy(obstacle);
         }
 
@@ -118,7 +131,7 @@ public class MakeMap : MonoBehaviour
                 float y = Random.Range(rangeA.position.y, rangeB.position.y);
                 // rangeAとrangeBのz座標の範囲内でランダムな数値を作成
                 float z = Random.Range(rangeA.position.z, rangeB.position.z);
-                randomPosition = new Vector3(x, y, z);
+                randomPosition = new Vector3(x, 0, z);
 
                 // 既存のオブジェクトとの距離を確認
                 positionValid = true;
@@ -137,11 +150,11 @@ public class MakeMap : MonoBehaviour
                 if (positionValid)
                 {
                     if (a == 0) {
-                        ServerManager.obstacless.Add(Instantiate(createPrefab[a], randomPosition, createPrefab[a].transform.rotation));
+                        ServerManager.obstacless.Add(Instantiate(createPrefab[a], randomPosition, createPrefab[a].transform.rotation) as GameObject);
                     }
                     else
                     {
-                        ServerManager.obstacless2.Add(Instantiate(createPrefab[a], randomPosition, createPrefab[a].transform.rotation));
+                        ServerManager.obstacless2.Add(Instantiate(createPrefab[a], randomPosition, createPrefab[a].transform.rotation) as GameObject);
                     }
                     objectPositions.Add(randomPosition); // 位置をリストに追加
                 }

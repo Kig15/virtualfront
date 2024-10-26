@@ -22,10 +22,15 @@ public class ObstaclesController : MonoBehaviour
 
     private void OnEnable()
     {
+
+        if (this == null)
+        {
+            return;
+        }
         // プレファブの配列の長さを取得
         // プレファブの配列の長さからランダムなインデックスを取得
-        number = Random.Range(0, Prefabs.Length);
-        number2 = Random.Range(0, SpownPoint.Length);
+        number = Random.Range(0, Prefabs.Length-1);
+        number2 = Random.Range(0, SpownPoint.Length-1);
         // Y軸の回転をランダムな角度に設定
         float randomYRotation = Random.Range(0f, 360f);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, randomYRotation, transform.rotation.eulerAngles.z);

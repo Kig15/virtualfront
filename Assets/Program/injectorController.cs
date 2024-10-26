@@ -39,19 +39,19 @@ public class injectorController : MonoBehaviour
             if (grabbable.isGrabbed)
             {
                 //controller = grabbable.grabbedBy.GetController();
+                if (((grabbable.grabbedBy.GetController().tag == "lefthand") ? ServerManager.ExWebSocketBehavior.ctrl[grabbable.grabbedBy.getnum()].IsgetDown(Button_sm.r2) : ServerManager.ExWebSocketBehavior.ctrl[grabbable.grabbedBy.getnum()].IsgetDown(Button_sm.r1)))
+                {
+                    PlayerController.isHealing = true;//プレイヤークラスのヒールをON
+                    audioSource.PlayOneShot(UseSound);//音鳴らして
+                                                      // Vibration.instance.StartVibration(frequency, amplitude, duration, controller);//コントローラー振動
+                                                      //使用したら使用不可にしてn秒後に消える処理
+                    isUseable = false;
+                    Invoke("DestroyMe", DestroySec);
+                }
 
             }//掴んでいたらコントロ－ラーを取得
             //((grabbable.grabbedBy.GetController().tag == "lefthand") ? ServerManager.ExWebSocketBehavior.ctrl[grabbable.grabbedBy.getnum()].IsgetDown(Button_sm.r2) : ServerManager.ExWebSocketBehavior.ctrl[grabbable.grabbedBy.getnum()].IsgetDown(Button_sm.r1))
-            //if (((grabbable.grabbedBy.GetController().tag == "lefthand") ? ServerManager.ExWebSocketBehavior.ctrl[grabbable.grabbedBy.getnum()].IsgetDown(Button_sm.r2) : ServerManager.ExWebSocketBehavior.ctrl[grabbable.grabbedBy.getnum()].IsgetDown(Button_sm.r1)))
-            //{
-            //    PlayerController.isHealing = true;//プレイヤークラスのヒールをON
-            //    audioSource.PlayOneShot(UseSound);//音鳴らして
-            //   // Vibration.instance.StartVibration(frequency, amplitude, duration, controller);//コントローラー振動
-            //    //使用したら使用不可にしてn秒後に消える処理
-            //    isUseable = false;
-            //    Invoke("DestroyMe", DestroySec);
-
-            //}
+            
         }
     }
 
